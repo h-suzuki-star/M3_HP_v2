@@ -1,0 +1,811 @@
+/* ============================================================
+   M3 Official Brand Site — style.css
+   ============================================================ */
+
+/* ---------- Variables ---------- */
+:root {
+  --black:       #0a0a0a;
+  --white:       #f8f8f6;
+  --mid:         #666;
+  --mid-light:   rgba(255,255,255,0.35);
+  --mid-dark:    rgba(0,0,0,0.35);
+  --serif:       'Cormorant Garamond', Georgia, serif;
+  --sans:        'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --nav-h:       72px;
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-std:    cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* ---------- Reset ---------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html { -webkit-font-smoothing: antialiased; }
+body {
+  font-family: var(--sans);
+  font-weight: 300;
+  background: var(--black);
+  color: var(--white);
+  overflow-x: hidden;
+}
+img {
+  display: block;
+  max-width: 100%;
+}
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+/* ---------- Utility ---------- */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 6vw;
+}
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+#nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5vw;
+  transition:
+    background 0.5s var(--ease-std),
+    backdrop-filter 0.5s;
+}
+
+/* Scrolled state */
+#nav.is-scrolled {
+  background: rgba(10,10,10,0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+#nav.is-scrolled.nav-light {
+  background: rgba(248,248,246,0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* Logo */
+.nav-logo {
+  display: flex;
+  align-items: center;
+}
+.nav-logo .logo-for-dark,
+.nav-logo .logo-for-light {
+  height: 34px;
+  width: auto;
+  object-fit: contain;
+  transition: opacity 0.4s var(--ease-std);
+}
+/* Default: dark sections → show white logo */
+.nav-logo .logo-for-light { display: none; }
+
+/* Light section: switch to black logo */
+#nav.nav-light .logo-for-dark  { display: none; }
+#nav.nav-light .logo-for-light { display: block; }
+
+/* Nav links */
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+}
+.nav-links a {
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.75);
+  transition: color 0.3s, opacity 0.3s;
+}
+#nav.nav-light .nav-links a {
+  color: rgba(0,0,0,0.65);
+}
+.nav-links a:hover {
+  opacity: 0.45;
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+#hero {
+  position: relative;
+  height: 100svh;
+  min-height: 600px;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 9vh;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center 20%;
+  transform-origin: center;
+  will-change: transform;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(0,0,0,0.25) 0%,
+    rgba(0,0,0,0.65) 60%,
+    rgba(0,0,0,0.82) 100%
+  );
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  padding: 0 5vw;
+  /* 幅制限を外してフォントサイズで制御 */
+}
+
+.hero-eyebrow {
+  font-size: clamp(0.85rem, 1.5vw, 1.1rem);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 1.8rem;
+  font-weight: 300;
+}
+
+.hero-headline {
+  font-family: var(--serif);
+  /* 7vw = 各行が画面幅に収まるスケール。最大7.5rem */
+  font-size: clamp(2.4rem, 7vw, 7.5rem);
+  font-weight: 300;
+  line-height: 1.2;
+  color: var(--white);
+  letter-spacing: 0.015em;
+}
+
+/* 各行を独立ブロック＋折り返し禁止で2行を完全固定 */
+.hero-line {
+  display: block;
+  white-space: nowrap;
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 2.8rem;
+  right: 5vw;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+.scroll-label {
+  font-size: 0.58rem;
+  letter-spacing: 0.28em;
+  color: rgba(255,255,255,0.38);
+  writing-mode: horizontal-tb;
+}
+.scroll-line {
+  width: 1px;
+  height: 56px;
+  background: rgba(255,255,255,0.15);
+  position: relative;
+  overflow: hidden;
+}
+.scroll-line::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.6);
+  animation: scrollDrop 1.8s var(--ease-out) infinite;
+  animation-delay: 0.5s;
+}
+@keyframes scrollDrop {
+  0%   { top: -100%; }
+  100% { top: 100%; }
+}
+
+/* ============================================================
+   SECTION SHARED
+   ============================================================ */
+.section-header {
+  margin-bottom: 5rem;
+}
+.section-label {
+  display: block;
+  font-size: 0.62rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--mid-light);
+  margin-bottom: 1.2rem;
+}
+/* For light sections, label gets dark mid color */
+[data-theme="light"] .section-label {
+  color: var(--mid-dark);
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+  font-weight: 300;
+  letter-spacing: 0.015em;
+  color: var(--white);
+}
+[data-theme="light"] .section-title {
+  color: var(--black);
+}
+
+/* ============================================================
+   CONCEPT
+   ============================================================ */
+#concept {
+  background: var(--white);
+  color: var(--black);
+  padding: clamp(7rem, 12vw, 12rem) 0;
+}
+.concept-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 8vw;
+  align-items: center;
+}
+
+/* ABOUT MⅢ ラベル — 存在感を強化 */
+#concept .section-label {
+  font-size: 1rem;
+  letter-spacing: 0.28em;
+  font-weight: 400;
+  color: rgba(0,0,0,0.45);
+  margin-bottom: 1.8rem;
+}
+
+/* 「自己実現」— pillar-title と同サイズで統一 */
+.concept-keyword {
+  font-family: var(--serif);
+  font-size: clamp(2.6rem, 4.5vw, 4.2rem);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  color: var(--black);
+}
+.concept-intro {
+  font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+  line-height: 2.1;
+  color: rgba(0,0,0,0.6);
+  margin-bottom: 2.5rem;
+}
+.concept-philosophy {
+  font-family: var(--serif);
+  font-size: clamp(1.05rem, 1.7vw, 1.35rem);
+  line-height: 1.95;
+  color: rgba(0,0,0,0.45);
+  font-style: italic;
+  /* 不自然な語中改行を防止 */
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/* 「場所。」などの末尾フレーズを孤立させない */
+.no-wrap {
+  white-space: nowrap;
+}
+
+/* ============================================================
+   MANAGEMENT
+   ============================================================ */
+#management {
+  background: var(--black);
+  padding: clamp(7rem, 12vw, 12rem) 0;
+}
+
+.members-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: clamp(1.2rem, 2vw, 2rem);
+}
+
+.member-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.member-photo {
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: #141414;
+  margin-bottom: 1.4rem;
+}
+.member-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 0.75s var(--ease-out);
+}
+.member-card:hover .member-photo img {
+  transform: scale(1.05);
+}
+
+.member-name-en {
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 0.4rem;
+}
+.member-name-ja {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--white);
+  letter-spacing: 0.06em;
+  margin-bottom: 0.8rem;
+}
+.member-role {
+  font-size: 0.7rem;
+  line-height: 1.75;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.02em;
+}
+
+/* ============================================================
+   STATS
+   ============================================================ */
+#stats {
+  background: var(--black);
+  padding: clamp(5rem, 9vw, 9rem) 0;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3rem;
+}
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem 1rem;
+  border: 1px solid rgba(255,255,255,0.07);
+}
+.stat-number {
+  font-family: var(--serif);
+  font-size: clamp(3rem, 5.5vw, 5.5rem);
+  font-weight: 300;
+  line-height: 1;
+  color: var(--white);
+  margin-bottom: 1.2rem;
+  letter-spacing: -0.01em;
+}
+.stat-number sup {
+  font-size: 0.38em;
+  vertical-align: super;
+}
+.stat-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 0.6rem;
+}
+.stat-sub {
+  font-size: 0.62rem;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+}
+
+/* ============================================================
+   PILLARS
+   ============================================================ */
+.pillar {
+  padding: clamp(7rem, 12vw, 12rem) 0;
+}
+[data-theme="dark"].pillar  { background: var(--black); }
+[data-theme="light"].pillar { background: var(--white); color: var(--black); }
+
+.pillar-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8vw;
+  align-items: center;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 6vw;
+}
+.pillar-inner.layout-reverse {
+  direction: rtl;
+}
+.pillar-inner.layout-reverse > * {
+  direction: ltr;
+}
+
+/* Images */
+.pillar-images {
+  position: relative;
+}
+.pillar-img-main-wrap {
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  will-change: transform;
+}
+.pillar-img-main-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.9s var(--ease-out);
+}
+.pillar:hover .pillar-img-main-wrap img {
+  transform: scale(1.04);
+}
+.pillar-img-sub-wrap {
+  position: absolute;
+  width: 44%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  bottom: -7%;
+  right: -6%;
+}
+[data-theme="dark"].pillar  .pillar-img-sub-wrap {
+  outline: 5px solid var(--black);
+}
+[data-theme="light"].pillar .pillar-img-sub-wrap {
+  outline: 5px solid var(--white);
+}
+.pillar-img-sub-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Content */
+.pillar-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.pillar-number {
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  margin-bottom: 1.8rem;
+  display: block;
+}
+[data-theme="dark"].pillar  .pillar-number { color: rgba(255,255,255,0.18); }
+[data-theme="light"].pillar .pillar-number { color: rgba(0,0,0,0.15); }
+
+.pillar-title {
+  font-family: var(--serif);
+  font-size: clamp(2.6rem, 4.5vw, 4.2rem);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  margin-bottom: 1rem;
+}
+[data-theme="dark"].pillar  .pillar-title { color: var(--white); }
+[data-theme="light"].pillar .pillar-title { color: var(--black); }
+
+.pillar-sub-title {
+  font-size: 0.66rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin-bottom: 2.2rem;
+}
+[data-theme="dark"].pillar  .pillar-sub-title { color: rgba(255,255,255,0.3); }
+
+.pillar-desc {
+  font-size: clamp(0.88rem, 1.3vw, 1rem);
+  line-height: 2.05;
+  margin-bottom: 1.8rem;
+}
+[data-theme="dark"].pillar  .pillar-desc { color: rgba(255,255,255,0.6); }
+[data-theme="light"].pillar .pillar-desc { color: rgba(0,0,0,0.6); }
+
+.pillar-detail {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+}
+[data-theme="dark"].pillar  .pillar-detail { color: rgba(255,255,255,0.28); }
+[data-theme="light"].pillar .pillar-detail { color: rgba(0,0,0,0.28); }
+
+/* Camp events */
+.camp-events {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  margin-top: 0.4rem;
+  padding-top: 1.8rem;
+  border-top: 1px solid rgba(0,0,0,0.1);
+}
+.camp-event {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.8rem;
+}
+.camp-event-date {
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: rgba(0,0,0,0.35);
+  min-width: 5.2rem;
+  padding-top: 0.1em;
+}
+.camp-event-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.camp-event-name {
+  font-size: 0.9rem;
+  color: rgba(0,0,0,0.75);
+  letter-spacing: 0.02em;
+}
+.camp-event-note {
+  font-size: 0.72rem;
+  color: rgba(0,0,0,0.38);
+}
+
+/* DR logo */
+.dr-logo-wrap {
+  margin-bottom: 2rem;
+}
+.dr-logo {
+  height: 42px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* ============================================================
+   HISTORY
+   ============================================================ */
+#history {
+  background: var(--black);
+  padding: clamp(7rem, 12vw, 12rem) 0;
+}
+.timeline {
+  position: relative;
+  max-width: 720px;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 130px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(255,255,255,0.08);
+}
+.timeline-item {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 0;
+  padding: 2.6rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  position: relative;
+  align-items: center;
+}
+.timeline-item::after {
+  content: '';
+  position: absolute;
+  left: 130px;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.4);
+  background: var(--black);
+}
+.timeline-year {
+  font-family: var(--serif);
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.28);
+  text-align: right;
+  padding-right: 2.5rem;
+}
+.timeline-body {
+  padding-left: 2.5rem;
+}
+.timeline-event {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 0.02em;
+}
+
+/* ============================================================
+   GALLERY
+   ============================================================ */
+#gallery {
+  background: var(--black);
+  padding: clamp(7rem, 12vw, 12rem) 0;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto;
+  gap: 0.8rem;
+}
+.gallery-item {
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+}
+.gallery-item.g-wide {
+  grid-column: span 2;
+  aspect-ratio: 16 / 9;
+}
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.75s var(--ease-out), opacity 0.4s;
+}
+.gallery-item:hover img {
+  transform: scale(1.04);
+  opacity: 0.85;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+#footer {
+  background: var(--black);
+  padding: 8rem 0 4rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.footer-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.footer-logo {
+  height: 52px;
+  width: auto;
+  object-fit: contain;
+  margin-bottom: 2.2rem;
+  opacity: 0.85;
+}
+.footer-concept {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-style: italic;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.04em;
+  margin-bottom: 3.5rem;
+}
+.footer-copy {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.16);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+/* ---- Tablet landscape (≤1100px) ---- */
+@media (max-width: 1100px) {
+  .members-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ---- Tablet portrait (≤860px) ---- */
+@media (max-width: 860px) {
+  /* タブレット幅でも hero-line(nowrap) が確実に収まるよう調整
+     最長行 10文字 × 7vw = 70vw < 90vw (コンテナ) ✓ */
+  .hero-headline { font-size: clamp(2rem, 7vw, 5rem); }
+
+  .concept-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .pillar-inner {
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+  }
+  .pillar-inner.layout-reverse {
+    direction: ltr;
+  }
+  .pillar-img-sub-wrap {
+    bottom: -5%;
+    right: -4%;
+  }
+}
+
+/* ---- Mobile (≤680px) ---- */
+@media (max-width: 680px) {
+  :root { --nav-h: 60px; }
+
+  /* Nav */
+  .nav-links { display: none; }
+
+  /* Hero — スマホ縦持ちに最適化
+     white-space:nowrap で各行を折り返し禁止にしているため、
+     フォントサイズはコンテナ幅に確実に収まる値に抑える。
+     最長行「生き方はウォーキング。」= 10文字
+     コンテナ幅 = 100vw − 2×6vw = 88vw
+     ∴ 1文字あたり最大 88vw/10 = 8.8vw → 安全マージンを取り 7vw を上限 */
+  .hero-content { padding: 0 6vw; }
+  .hero-headline {
+    font-size: clamp(1.5rem, 7vw, 3rem);
+  }
+  .hero-eyebrow {
+    font-size: clamp(0.72rem, 3vw, 0.9rem);
+  }
+
+  /* Concept — pillar-title と同サイズを維持 */
+  #concept .section-label {
+    font-size: 0.82rem;
+  }
+  .concept-keyword {
+    /* pillar-title と揃える。モバイルでも min を 2.6rem に統一 */
+    font-size: clamp(2.6rem, 4.5vw, 4.2rem);
+  }
+  .concept-intro {
+    font-size: 0.92rem;
+    line-height: 2;
+  }
+  .concept-philosophy {
+    font-size: 1rem;
+    line-height: 1.9;
+  }
+  /* モバイルでは .no-wrap を無効化して自然な折り返しを許可 */
+  .no-wrap { white-space: normal; }
+
+  /* Members */
+  .members-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  /* Stats */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  /* Gallery */
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .gallery-item.g-wide {
+    grid-column: span 2;
+    aspect-ratio: 4 / 3;
+  }
+
+  /* Timeline */
+  .timeline::before { left: 80px; }
+  .timeline-item { grid-template-columns: 80px 1fr; }
+  .timeline-item::after { left: 80px; }
+  .timeline-year { padding-right: 1.8rem; }
+  .timeline-body { padding-left: 1.8rem; }
+}
+
+/* ---- Small mobile (≤420px) ---- */
+@media (max-width: 420px) {
+  /* 超小型画面でも 7vw × 10文字 = 70vw < 88vw (コンテナ幅) で収まる */
+  .hero-headline { font-size: clamp(1.2rem, 7vw, 2rem); }
+  .members-grid { grid-template-columns: repeat(2, 1fr); }
+  .stats-grid   { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .stat-item    { padding: 1.4rem 0.75rem; }
+  .gallery-grid { grid-template-columns: 1fr; }
+  .gallery-item.g-wide { grid-column: span 1; aspect-ratio: 4 / 5; }
+}
